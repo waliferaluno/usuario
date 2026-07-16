@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class UsuarioController {
 
-    private UsuarioService usuarioService
+    private UsuarioService usuarioService;
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDTO));
