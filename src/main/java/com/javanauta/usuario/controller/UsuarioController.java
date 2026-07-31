@@ -26,17 +26,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UsuarioDTO usuarioDTO){
-        try {
+    public String login(@RequestBody UsuarioDTO usuarioDTO) {
             Authentication authentication =
                     authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            usuarioDTO.getEmail(), usuarioDTO.getSenha()));
+                            new UsernamePasswordAuthenticationToken(
+                                    usuarioDTO.getEmail(), usuarioDTO.getSenha()));
             return "Bearer " + jwtUtil.generateToken(authentication.getName());
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @GetMapping
