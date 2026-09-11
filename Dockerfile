@@ -1,9 +1,9 @@
-FROM eclipse-temurin:17-jdk-alpine
-
+FROM gradle:8.14.3-jdk17 AS build
 WORKDIR /app
-
-COPY build/libs/agendador-tarefas-0.0.1-SNAPSHOT.jar /app/agendador-tarefas.jar
-
-EXPOSE 8081
-
-CMD ["java", "-jar", "/app/agendador-tarefas.jar"]
+COPY . .
+RUN gradle clean build --no-daemon
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar /app/usuario.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/app/usuario.jar"]
