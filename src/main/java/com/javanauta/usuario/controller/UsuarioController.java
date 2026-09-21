@@ -1,9 +1,11 @@
 package com.javanauta.usuario.controller;
 
 import com.javanauta.usuario.bussiness.UsuarioService;
+import com.javanauta.usuario.bussiness.ViaCepService;
 import com.javanauta.usuario.bussiness.dto.EnderecoDTO;
 import com.javanauta.usuario.bussiness.dto.TelefoneDTO;
 import com.javanauta.usuario.bussiness.dto.UsuarioDTO;
+import com.javanauta.usuario.infrastructure.clients.ViaCepDTO;
 import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import com.javanauta.usuario.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +29,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
     @PostMapping
     @Operation(summary = "Salvar Usuários", description = "Cria um novo usuário")
@@ -133,6 +136,11 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
 
+    }
+
+    @GetMapping("/endereco/{cep}")
+    public ResponseEntity<ViaCepDTO> buscarDadosCep(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
     }
 
 }
